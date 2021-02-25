@@ -11,9 +11,19 @@ class nueralNetwork:
         self.w_h_o = numpy.random.rand(self.hnodes, self.onodes)
         self.activation_function = lambda x: scipy.special.expit(x)
 
-    def train(self):
-        pass
-
+    def train(self, input_list, target_list):
+		inputs = numpy.array(input_list, ndmin=2).T
+		targets = numpy.array(target_list, ndmin=2).T
+		hidden_inputs = numpy.dot(self.w_i_h, inputs)
+		hidden_outputs = self.activation_function(hidden_inputs)
+		final_inputs = numpy.dot(self.w_h_o, hidden_outputs)
+		final_outputs = self.activation_function(final_inputs)
+		output_error = targets - final_outputs
+		print(output_error)
+		print('------------------------------------------')
+		print(self.w_h_o)
+		print('------------------------------------------')
+		print(self.w_h_o.T)
     def query(self, input_list):
         inputs = numpy.array(input_list, ndmin=2).T
         print(inputs)
@@ -25,4 +35,7 @@ class nueralNetwork:
         return final_outputs
 
 nueral = nueralNetwork(3, 3, 3, 0.001)
-nueral.query([1.2, 0.5, -1.5])
+inputs = [1.2, 0.5, -1.5]
+target_list = [10, 10, 10]
+nueral.train(inputs, target_list)
+#143
